@@ -1,0 +1,5 @@
+---
+scylla_required_packages:
+  - wget
+  - gnupg
+  - apt-transport-https

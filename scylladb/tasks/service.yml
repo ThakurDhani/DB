@@ -1,0 +1,11 @@
+- name: Reload systemd
+  systemd:
+    daemon_reload: true
+  become: true
+
+- name: Enable & start Scylla
+  systemd:
+    name: "{{ scylla_service_name }}"
+    enabled: true
+    state: started
+  become: true

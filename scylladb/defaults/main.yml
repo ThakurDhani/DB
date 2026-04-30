@@ -1,0 +1,39 @@
+---
+# -----------------------------
+# Repository
+# -----------------------------
+scylla_repo_url: "http://downloads.scylladb.com/deb/debian/scylla-2025.4.list"
+scylla_apt_key_id: "a43e06657bac99e3"
+scylla_apt_keyring: "/etc/apt/keyrings/scylladb.gpg"
+scylla_repo_file: "/etc/apt/sources.list.d/scylla.list"
+
+# -----------------------------
+# Packages
+# -----------------------------
+scylla_packages:
+  - scylla
+
+java_package: openjdk-11-jre-headless
+scylla_service_name: scylla-server
+
+# -----------------------------
+# Behavior toggles
+# -----------------------------
+scylla_configure: true
+scylla_start_service: true
+scylla_create_schema: false
+
+# -----------------------------
+# Cluster config
+# -----------------------------
+scylla_cluster_name: "Test Cluster"
+scylla_listen_address: "{{ ansible_default_ipv4.address }}"
+scylla_rpc_address: "0.0.0.0"
+scylla_broadcast_rpc_address: "{{ ansible_default_ipv4.address }}"
+scylla_rpc_port: 9042
+
+scylla_seed: "{{ groups['scylla'] | map('extract', hostvars, ['ansible_default_ipv4','address']) | join(',') }}"
+scylla_endpoint_snitch: "SimpleSnitch"
+scylla_num_tokens: 256
+scylla_auto_bootstrap: false
+scylla_developer_mode: true

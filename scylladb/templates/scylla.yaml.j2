@@ -1,0 +1,15 @@
+cluster_name: "{{ scylla_cluster_name }}"
+developer_mode: {{ scylla_developer_mode | bool }}
+
+listen_address: {{ scylla_listen_address }}
+rpc_address: {{ scylla_rpc_address }}
+broadcast_rpc_address: {{ scylla_broadcast_rpc_address }}
+
+seed_provider:
+  - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+    parameters:
+      - seeds: "{{ scylla_seed }}"
+
+endpoint_snitch: "{{ scylla_endpoint_snitch }}"
+num_tokens: {{ scylla_num_tokens }}
+auto_bootstrap: {{ scylla_auto_bootstrap }}

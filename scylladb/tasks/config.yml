@@ -1,0 +1,9 @@
+- name: Deploy scylla.yaml
+  template:
+    src: scylla.yaml.j2
+    dest: /etc/scylla/scylla.yaml
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart scylla
+  become: true

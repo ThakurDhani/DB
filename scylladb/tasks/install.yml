@@ -1,0 +1,51 @@
+- name: Install required packages
+  apt:
+    name: "{{ scylla_required_packages }}"
+    state: present
+    update_cache: yes
+  become: true
+
+- name: Create keyring directory
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+  become: true
+
+- name: Add Scylla GPG key
+  command: >
+    gpg --homedir /tmp --no-default-keyring
+    --keyring {{ scylla_apt_keyring }}
+    --keyserver hkp://keyserver.ubuntu.com:80
+    --recv-keys {{ scylla_apt_key_id }}
+  args:
+    creates: "{{ scylla_apt_keyring }}"
+  become: true
+
+- name: Add Scylla repo
+  get_url:
+    url: "{{ scylla_repo_url }}"
+    dest: "{{ scylla_repo_file }}"
+  become: true
+
+- name: Install ScyllaDB
+  apt:
+    name: "{{ scylla_packages }}"
+    state: present
+    update_cache: yes
+  become: true
+
+- name: Install Java
+  apt:
+    name: "{{ java_package }}"
+    state: present
+  become: true
+
+- name: Run scylla setup
+  command: >
+    scylla_setup --no-raid-setup
+    {% if scylla_developer_mode %} --developer-mode {% endif %}
+    --no-ec2-check
+  args:
+    creates: /etc/scylla/scylla.yaml
+  become: true

@@ -1,0 +1,6 @@
+---
+- name: restart scylla
+  systemd:
+    name: "{{ scylla_service_name }}"
+    state: restarted
+  become: true

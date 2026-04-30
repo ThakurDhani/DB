@@ -1,0 +1,15 @@
+---
+- name: Include install tasks
+  include_tasks: install.yml
+
+- name: Include config tasks
+  include_tasks: config.yml
+  when: scylla_configure
+
+- name: Include service tasks
+  include_tasks: service.yml
+  when: scylla_start_service
+
+- name: Include schema tasks
+  include_tasks: schema.yml
+  when: scylla_create_schema
