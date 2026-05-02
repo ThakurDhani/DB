@@ -1,0 +1,21 @@
+---
+- name: Install Redis
+  apt:
+    name: "{{ redis_package }}"
+    state: present
+    update_cache: yes
+  become: true
+
+- name: Configure Redis
+  template:
+    src: redis.conf.j2
+    dest: "{{ redis_conf_path }}"
+  notify: Restart Redis
+  become: true
+
+- name: Start Redis service
+  service:
+    name: "{{ redis_service }}"
+    state: started
+    enabled: yes
+  become: true

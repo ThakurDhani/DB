@@ -1,0 +1,7 @@
+---
+galaxy_info:
+  author: dhani
+  description: Simple Redis role for Ubuntu
+  min_ansible_version: "2.9"
+dependencies: []
+#name of all the dependencies for your application 

@@ -1,0 +1,8 @@
+bind {{ redis_bind }}
+port {{ redis_port }}
+
+supervised systemd
+daemonize no
+
+dir /var/lib/redis
+logfile /var/log/redis/redis-server1.log
